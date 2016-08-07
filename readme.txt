@@ -1,18 +1,18 @@
 === Easy Peasy MailChimp Ajax Form ===
-Contributors: alessandro.tesoro
+Contributors: alessandro.tesoro, alpipego
 Tags: email, mailchimp, marketing, newsletter, plugin, signup, MailChimp form, MailChimp Newsletter form, MailChimp plugin, ajax mailchimp, mailchimp ajax form
 Requires at least: 3.8
-Tested up to: 4.1
-Stable tag: 1.0.5
+Tested up to: 4.5.3
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 The Easy Peasy MailChimp plugin allows you to easily add an ajax powered MailChimp newsletter subscribe form in any page of your WordPress site.
 
 == Description ==
-The Easy Peasy MailChimp plugin allows you to easily add an ajax powered MailChimp newsletter subscribe form in any page of your WordPress site. You can add forms to posts or pages with a shortcode or to template files with PHP tags. Simply copy and paste your MailChimp API Key and list ID into the plugin admin settings and you're good to go. 
+The Easy Peasy MailChimp plugin allows you to easily add an ajax powered MailChimp newsletter subscribe form in any page of your WordPress site. You can add forms to posts or pages with a shortcode or to template files with PHP tags. Simply copy and paste your MailChimp API Key and list ID into the plugin admin settings and you're good to go.
 
-Using some fancy Ajax technology your users can sign up without the page refreshing, making the process fast, and unobtrusive to the browsing experience. The form also comes with plenty of css selectors that allow you to customize the layout of the signup form. 
+Using some fancy Ajax technology your users can sign up without the page refreshing, making the process fast, and unobtrusive to the browsing experience. The form also comes with plenty of css selectors that allow you to customize the layout of the signup form.
 
 In addition, the plugin comes with an intelligent templating system that allow you to easily customize the markup of the form if you need to, read the faq section for more information.
 
@@ -32,7 +32,7 @@ After Installation, the setup page will guide you through entering your API key 
 > [Free WordPress plugins](http://profiles.wordpress.org/alessandrotesoro/) | [Premium WordPress Themes](http://themeforest.net/user/ThemesDepot/portfolio) | [Follow Me On Twitter](https://twitter.com/themesdepot)
 
 == Installation ==
-1. Upload "easy-peasy-mailchimp" folder to the "/wp-content/plugins/" directory. 
+1. Upload "easy-peasy-mailchimp" folder to the "/wp-content/plugins/" directory.
 1. Activate the plugin through the "Plugins" menu in WordPress.
 1. Navigate to "Settings" -> "MailChimp Settings" of your WordPress admin panel.
 1. Enter your MailChimp settings.
@@ -56,7 +56,7 @@ Use the following shortcode to display a form anywhere you want
 1. Open your custom theme folder and create an empty folder and call it "epm" (without quotes)
 1. Navigate to folder wp-content/plugins/easy-peasy-mailchimp/templates
 1. Copy file mailchimp-form.php
-1. Paste the file into the "epm" subfolder that you created into your theme folder 
+1. Paste the file into the "epm" subfolder that you created into your theme folder
 
 = How can i disable the validation error message? =
 If you wish to disable the validation message, add the following code into your theme's function.php file
@@ -80,10 +80,10 @@ add_filter('epm_filter_success', 'epm_disable_success_message');`
 
 == Changelog ==
 = 1.0.5 =
-* Fixed: php notices displaying when debug mode enabled.  
+* Fixed: php notices displaying when debug mode enabled.
 
 = 1.0.4 =
-* Added: plugin will not activate if your web host is living in the stone age. Plugin requires PHP 5.3 or greater to work.  
+* Added: plugin will not activate if your web host is living in the stone age. Plugin requires PHP 5.3 or greater to work.
 
 = 1.0.3 =
 * Added: Ability to display multiple forms in the same page.

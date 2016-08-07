@@ -4,10 +4,10 @@ Plugin Name: Easy Peasy MailChimp Ajax Form
 Plugin URI: http://themesdepot.org
 Description: Easy Peasy MailChimp allows you to easily include an ajax powered mailchimp newsletter signup form into your website through widget or shortcode.
 Author: Alessandro Tesoro
-Version: 1.0.5
+Version: 1.0.6
 Author URI: http://alessandrotesoro.me
 Requires at least: 3.8
-Tested up to: 4.0
+Tested up to: 4.5.3
 Text Domain: easy-peasy-mailchimp
 Domain Path: /languages
 License: GPLv2 or later
@@ -45,7 +45,7 @@ class Easy_Peasy_MailChimp {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		
+
 		// Define constants
 		define( 'EPM_VERSION', '1.0.5' );
 		define( 'EPM_SLUG', plugin_basename(__FILE__));
@@ -53,7 +53,7 @@ class Easy_Peasy_MailChimp {
 		define( 'EPM_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 
 		//Filters
-		register_activation_hook(__FILE__, array( $this,'plugin_activation_check')); 
+		register_activation_hook(__FILE__, array( $this,'plugin_activation_check'));
 
 		add_filter( "plugin_action_links_".EPM_SLUG , array( $this,'epm_add_settings_link') );
 		add_filter( 'plugin_row_meta', array( $this,'epm_plugin_row_meta'), 10, 2 );
@@ -131,7 +131,7 @@ class Easy_Peasy_MailChimp {
 		require_once EPM_PLUGIN_DIR . '/includes/shortcode.php';
 
 		// Easy Peasy Ajax Handler
-		require_once EPM_PLUGIN_DIR . '/includes/ajax.php';		
+		require_once EPM_PLUGIN_DIR . '/includes/ajax.php';
 
 	}
 
@@ -195,15 +195,15 @@ class Easy_Peasy_MailChimp {
 
 	/**
 	 * Prevents Plugin Activation if host is crap.
-	 * Yes, my darling friends, php 5.2 was deprecated in 2011 
+	 * Yes, my darling friends, php 5.2 was deprecated in 2011
 	 * Run away from your host if you're still using php 5.2
 	 * @since 1.0.4
 	 */
-	function plugin_activation_check(){ 
-        if (version_compare(PHP_VERSION, '5.3', '<')) { 
-                deactivate_plugins(basename(__FILE__)); // Deactivate ourself 
-                wp_die("Sorry, but you can't run this plugin, it requires PHP 5.3 or higher. Contact your host and request a php update."); 
-        } 
+	function plugin_activation_check(){
+        if (version_compare(PHP_VERSION, '5.3', '<')) {
+                deactivate_plugins(basename(__FILE__)); // Deactivate ourself
+                wp_die("Sorry, but you can't run this plugin, it requires PHP 5.3 or higher. Contact your host and request a php update.");
+        }
 	}
 
 }

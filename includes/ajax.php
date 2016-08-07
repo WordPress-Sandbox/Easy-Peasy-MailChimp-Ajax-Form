@@ -46,14 +46,17 @@ function epm_mailchimp_submit_to_list() {
 			'send_welcome'      => (epm_get_option('send_welcome_message') ? true : false),
 		));
 
-		if(epm_get_option('display_name_fields') && !empty($epm_name) && !empty($epm_lastname) && !empty($epm_email) && is_email( $epm_email ) ) {
-			echo '<div class="epm-message epm-success message success"><p>'.__('Thank you for signing up to the newsletter.','easy-peasy-mailchimp').'</p></div>';
+		// check if the result from MailChimp is clean
+		if ($result) {
+			echo '<div class="epm-message epm-success message success">';
+			printf('<p>%s</p>', __('Thank you for signing up to the newsletter.','easy-peasy-mailchimp'));
+			if (epm_get_option('enable_double_optin')) {
+				printf('<p>%s</p>', __('Please check your email.', 'easy-peasy-mailchimp'));
+			}
+			echo '</div>';
+		} else {
+			$errors[] = __('There has been an error with MailChimp. Please contact the administrator of this website.', 'easy-peasy-mailchimp');
 		}
-
-		if(!epm_get_option('display_name_fields') && !empty($epm_email) && is_email( $epm_email )) {
-			echo '<div class="epm-message epm-success message success"><p>'.__('Thank you for signing up to the newsletter.','easy-peasy-mailchimp').'</p></div>';
-		}
-
 	}
 
 	// If there are errors output them to the user

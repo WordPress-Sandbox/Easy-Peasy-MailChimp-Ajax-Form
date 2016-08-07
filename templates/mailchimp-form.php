@@ -4,10 +4,10 @@
  * @since    1.0.0
  */
 
-global $epm_options;
-
 $current_user = wp_get_current_user();
 $epm_default_email_value = null;
+$list = epm_get_option('mailchimp_list_id');
+
 if(is_user_logged_in()) {
 	$epm_default_email_value = $current_user->user_email;
 }
@@ -20,7 +20,7 @@ if(is_user_logged_in()) {
 
 	<div class="epm-form-field">
 		<label for="epm-first-name"><?php _e('First Name','easy-peasy-mailchimp');?></label>
-		<input type="text" placeholder="<?php _e('First Name','easy-peasy-mailchimp');?>" name="epm-first-name" tabindex="7" class="name first-name" id="epm-first-name"/>
+		<input type="text" placeholder="<?php _e('First Name','easy-peasy-mailchimp');?>" name="epm-first-name" tabindex="7" class="name first-name" id="epm-first-name" required />
 	</div>
 
 	<div class="epm-form-field">
@@ -32,7 +32,7 @@ if(is_user_logged_in()) {
 
 	<div class="epm-form-field">
 		<label for="epm-email"><?php _e('Email Address','easy-peasy-mailchimp');?></label>
-		<input type="email" placeholder="<?php _e('Email Address','easy-peasy-mailchimp');?>" name="epm-email" tabindex="8" class="email" id="epm-email" value="<?php echo $epm_default_email_value; ?>"/>
+		<input type="email" placeholder="<?php _e('Email Address','easy-peasy-mailchimp');?>" name="epm-email" tabindex="8" class="email" id="epm-email" value="<?php echo $epm_default_email_value; ?>" required />
 	</div>
 
 	<input type="hidden" name="epm_submit" id="epm_submit" value="true" />

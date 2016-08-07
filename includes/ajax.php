@@ -78,8 +78,11 @@ add_action('wp_ajax_nopriv_epm_mailchimp_submit_to_list', 'epm_mailchimp_submit_
 /**
  * Add js ajax script to footer.
  * @since    1.0.0
+ * @since 1.0.6 wait for jquery to be loaded
  */
-function epm_mailchimp_footer_js() { ?>
+function epm_mailchimp_footer_js() {
+	if ( wp_script_is( 'jquery', 'done' ) ) :
+		?>
 <script>
 jQuery(window).load(function() {
 	jQuery('.epm-submit-chimp').click(function() {
@@ -123,5 +126,7 @@ jQuery(window).load(function() {
 	});
 });
 </script>
-<?php }
+<?php
+	endif;
+}
 add_action('wp_footer','epm_mailchimp_footer_js');

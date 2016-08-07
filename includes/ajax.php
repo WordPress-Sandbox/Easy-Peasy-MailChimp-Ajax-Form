@@ -18,35 +18,22 @@ function epm_mailchimp_submit_to_list() {
 	$epm_email = sanitize_email($_POST['epm_email']);
 	$epm_enable_validation = apply_filters( 'epm_filter_validation', 'enabled' ); //filter to disable/enable default validation messages
 	$epm_enable_success = apply_filters( 'epm_filter_success', 'enabled' ); //filter to disable/enable default success messages
+	$errors = array();
 
 	//show error if fields are empty and validation is enabled
 	if($epm_enable_validation == 'enabled') {
-
 		// first name and last name not filled and name fields are enabled
 		if(empty($epm_name) && epm_get_option('display_name_fields')) {
-			echo '<div class="epm-message epm-error message error"><p>'.__('Please fill in first name and last name fields.'.$epm_options['display_name_fields'],'easy-peasy-mailchimp').'</p></div>';
+			$errors[] = __('Please fill in first name and last name fields.'.$epm_options['display_name_fields'],'easy-peasy-mailchimp');
 		}
-		// if email is not a valid email address
+		// if email is not a valid email
 		if(!is_email( $epm_email )) {
-			echo '<div class="epm-message epm-error message error"><p>'.__('Please add a correct email address.'.$epm_options['display_name_fields'],'easy-peasy-mailchimp').'</p></div>';
+			$errors[] = __('Please add a correct email address.'.$epm_options['display_name_fields'],'easy-peasy-mailchimp');
 		}
 	}
 
 	//show success if enabled and form is correctly filled
-	if($epm_enable_success == 'enabled') {
-
-		if(epm_get_option('display_name_fields') && !empty($epm_name) && !empty($epm_lastname) && !empty($epm_email) && is_email( $epm_email ) ) {
-			echo '<div class="epm-message epm-success message success"><p>'.__('Thank you for signing up to the newsletter.','easy-peasy-mailchimp').'</p></div>';
-		}
-
-		if(!epm_get_option('display_name_fields') && !empty($epm_email) && is_email( $epm_email )) {
-			echo '<div class="epm-message epm-success message success"><p>'.__('Thank you for signing up to the newsletter.','easy-peasy-mailchimp').'</p></div>';
-		}
-
-	}
-
-	//proceed with submission to the mailchimp api
-	if(epm_get_option('display_name_fields') && !empty($epm_name) && !empty($epm_lastname) && !empty($epm_email) && is_email( $epm_email ) || !epm_get_option('display_name_fields') && !empty($epm_email) && is_email( $epm_email ) ) {
+	if($epm_enable_success == 'enabled' && empty($errors)) {
 
 		$MailChimp = new \Drewm\MailChimp( $epm_options['mailchimp_api_key'] );
 		$result = $MailChimp->call('lists/subscribe', array(
@@ -59,8 +46,24 @@ function epm_mailchimp_submit_to_list() {
 			'send_welcome'      => (epm_get_option('send_welcome_message') ? true : false),
 		));
 
+		if(epm_get_option('display_name_fields') && !empty($epm_name) && !empty($epm_lastname) && !empty($epm_email) && is_email( $epm_email ) ) {
+			echo '<div class="epm-message epm-success message success"><p>'.__('Thank you for signing up to the newsletter.','easy-peasy-mailchimp').'</p></div>';
+		}
+
+		if(!epm_get_option('display_name_fields') && !empty($epm_email) && is_email( $epm_email )) {
+			echo '<div class="epm-message epm-success message success"><p>'.__('Thank you for signing up to the newsletter.','easy-peasy-mailchimp').'</p></div>';
+		}
+
 	}
 
+	// If there are errors output them to the user
+	if (!empty($errors)) {
+		echo '<div class="epm-message epm-error message error">';
+		foreach ($errors as $error) {
+			printf('<p>%s</p>', $error);
+		}
+		echo '</div>';
+	}
 
 	// Return String
 	die();

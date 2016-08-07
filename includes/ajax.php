@@ -84,47 +84,48 @@ function epm_mailchimp_footer_js() {
 	if ( wp_script_is( 'jquery', 'done' ) ) :
 		?>
 <script>
-jQuery(window).load(function() {
-	jQuery('.epm-submit-chimp').click(function() {
+	jQuery(document).ready(function($) {
+		$('.epm-sign-up-form').on('submit', function(e) {
+			e.preventDefault();
 
-		//get form values
-		var epm_form = jQuery(this);
-		var epm_list_id = jQuery(epm_form).parent().find('#epm_list_id').val();
-		var epm_firstname = jQuery(epm_form).parent().find('#epm-first-name').val();
-		var epm_lastname = jQuery(epm_form).parent().find('#epm-last-name').val();
-		var epm_email = jQuery(epm_form).parent().find('#epm-email').val();
+			//get form values
+			var epm_form = $(this);
+			var epm_list_id = $(epm_form).parent().find('#epm_list_id').val();
+			var epm_firstname = $(epm_form).parent().find('#epm-first-name').val();
+			var epm_lastname = $(epm_form).parent().find('#epm-last-name').val();
+			var epm_email = $(epm_form).parent().find('#epm-email').val();
 
-		//change submit button text
-		var submit_wait_text = jQuery(this).data('wait-text');
-		var submit_orig_text = jQuery(this).val();
-		jQuery(this).val(submit_wait_text);
+			//change submit button text
+			var submit_wait_text = $(this).data('wait-text');
+			var submit_orig_text = $(this).val();
+			$(this).val(submit_wait_text);
 
-		jQuery.ajax({
-			type: 'POST',
-			context: this,
-			url: "<?php echo admin_url('admin-ajax.php');?>",
-			data: {
-				action: 'epm_mailchimp_submit_to_list',
-				epm_list_id: epm_list_id,
-				epm_firstname: epm_firstname,
-				epm_lastname: epm_lastname,
-				epm_email: epm_email
-			},
-			success: function(data, textStatus, XMLHttpRequest){
-				var epm_ajax_response = jQuery(data);
-				jQuery(epm_form).parent().find('.epm-message').remove(); // remove existing messages on re-submission
-				jQuery(epm_form).parent().prepend(epm_ajax_response);
-				jQuery(epm_form).val(submit_orig_text); // restore submit button text
-				<?php do_action('epm_jquery_ajax_success_event');?>
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown){
-				alert('Something Went Wrong!');
-			}
+			$.ajax({
+				type: 'POST',
+				context: this,
+				url: "<?php echo admin_url('admin-ajax.php');?>",
+				data: {
+					action: 'epm_mailchimp_submit_to_list',
+					epm_list_id: epm_list_id,
+					epm_firstname: epm_firstname,
+					epm_lastname: epm_lastname,
+					epm_email: epm_email
+				},
+				success: function(data, textStatus, XMLHttpRequest){
+					var epm_ajax_response = $(data);
+					$(epm_form).parent().find('.epm-message').remove(); // remove existing messages on re-submission
+					$(epm_form).parent().prepend(epm_ajax_response);
+					$(epm_form).val(submit_orig_text); // restore submit button text
+					<?php do_action('epm_jquery_ajax_success_event');?>
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					alert(<?php __('Something Went Wrong!', 'easy-peasy-mailchimp'); ?>);
+				}
+			});
+			return false;
+
 		});
-		return false;
-
 	});
-});
 </script>
 <?php
 	endif;

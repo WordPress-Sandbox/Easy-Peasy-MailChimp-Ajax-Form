@@ -6,16 +6,16 @@
  */
 
 function epm_mailchimp_submit_to_list() {
-	
+
 	global $epm_options;
 
 	//get data from our ajax() call
-	$epm_list_id = $_POST['epm_list_id'];
+	$epm_list_id = sanitize_text_field($_POST['epm_list_id']);
 	if(epm_get_option('display_name_fields')):
-	$epm_name = $_POST['epm_firstname'];
-	$epm_lastname = $_POST['epm_lastname'];
+	$epm_name = sanitize_text_field($_POST['epm_firstname']);
+	$epm_lastname = sanitize_text_field($_POST['epm_lastname']);
 	endif;
-	$epm_email = $_POST['epm_email'];
+	$epm_email = sanitize_email($_POST['epm_email']);
 	$epm_enable_validation = apply_filters( 'epm_filter_validation', 'enabled' ); //filter to disable/enable default validation messages
 	$epm_enable_success = apply_filters( 'epm_filter_success', 'enabled' ); //filter to disable/enable default success messages
 
@@ -69,7 +69,7 @@ function epm_mailchimp_submit_to_list() {
 
 	// Return String
 	die();
-	
+
 }
 add_action('wp_ajax_epm_mailchimp_submit_to_list', 'epm_mailchimp_submit_to_list');
 add_action('wp_ajax_nopriv_epm_mailchimp_submit_to_list', 'epm_mailchimp_submit_to_list');

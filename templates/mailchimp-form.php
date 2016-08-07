@@ -1,12 +1,12 @@
-<?php 
+<?php
 /**
  * Template file to display the mailchimp form
  * @since    1.0.0
  */
 
-global $epm_options, $current_user;
+global $epm_options;
 
-get_currentuserinfo();
+$current_user = wp_get_current_user();
 $epm_default_email_value = null;
 if(is_user_logged_in()) {
 	$epm_default_email_value = $current_user->user_email;
@@ -37,7 +37,7 @@ if(is_user_logged_in()) {
 
 	<input type="hidden" name="epm_submit" id="epm_submit" value="true" />
 	<input type="hidden" name="epm_list_id" id="epm_list_id" value="<?php echo $list;?>" />
-	
+
 	<input type="submit" name="epm-submit-chimp" value="<?php _e('Sign Up Now','easy-peasy-mailchimp');?>" data-wait-text="<?php _e('Please wait...','easy-peasy-mailchimp');?>" tabindex="10" class="button btn epm-sign-up-button epm-submit-chimp"/>
 
 </form>

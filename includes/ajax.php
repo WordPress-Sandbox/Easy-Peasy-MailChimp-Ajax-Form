@@ -26,15 +26,10 @@ function epm_mailchimp_submit_to_list() {
 		if(empty($epm_name) && epm_get_option('display_name_fields')) {
 			echo '<div class="epm-message epm-error message error"><p>'.__('Please fill in first name and last name fields.'.$epm_options['display_name_fields'],'easy-peasy-mailchimp').'</p></div>';
 		}
-		// email field is empty and is not an email
-		if(empty($epm_email) && !is_email( $epm_email )) {
+		// if email is not a valid email address
+		if(!is_email( $epm_email )) {
 			echo '<div class="epm-message epm-error message error"><p>'.__('Please add a correct email address.'.$epm_options['display_name_fields'],'easy-peasy-mailchimp').'</p></div>';
 		}
-		// email field is not empty and is not an email
-		if(!empty($epm_email) && !is_email( $epm_email )) {
-			echo '<div class="epm-message epm-error message error"><p>'.__('The email address seems to be wrong.','easy-peasy-mailchimp').'</p></div>';
-		}
-
 	}
 
 	//show success if enabled and form is correctly filled
